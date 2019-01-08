@@ -1,0 +1,61 @@
+//object creation by deserialization 
+
+import java.io.*; 
+
+class Example implements java.io.Serializable { 
+
+	public int emp_id; 
+	public String emp_name; 
+
+	public Example(int emp_id, String emp_name) 
+	{ 
+		this.emp_id = emp_id; 
+		this.emp_name = emp_name; 
+	} 
+} 
+
+class Example2 { 
+	public static void main(String[] args) 
+	{ 
+		Example object = new Example(1, "UTKARSH"); 
+		String filename = "file1.ser"; 
+
+		try { 
+
+			FileOutputStream file1 = new FileOutputStream(filename); 
+			ObjectOutputStream out = new ObjectOutputStream(file1); 
+
+			out.writeObject(object); 
+
+			out.close(); 
+			file1.close(); 
+
+			System.out.println("Object has been serialized"); 
+		} 
+
+		catch (IOException ex) { 
+			System.out.println("IOException is caught"); 
+		} 
+
+		Example object1 = null; 
+
+		try { 
+
+			FileInputStream file1 = new FileInputStream(filename); 
+			ObjectInputStream in = new ObjectInputStream(file1); 
+
+			object1 = (Example)in.readObject(); 
+
+			in.close(); 
+			file1.close(); 
+
+			System.out.println("Object has been deserialized"); 
+			System.out.println("Employee ID = " + object1.emp_id); 
+			System.out.println("Employee Name = " + object1.emp_name); 
+		} 
+
+		catch (Exception ex) { 
+			System.out.println("Exception is caught"); 
+		}
+	} 
+} 
